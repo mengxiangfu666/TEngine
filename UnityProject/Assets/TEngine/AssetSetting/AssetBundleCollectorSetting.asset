@@ -78,9 +78,17 @@ MonoBehaviour:
         CollectorGUID: dd2928019aef34248af368b99bc53bea
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
+        PackRuleName: PackSeparately
         FilterRuleName: CollectAll
-        AssetTags: WEBGL_PRELOAD
+        AssetTags: PRELOAD
+        UserData: 
+      - CollectPath: Assets/AssetRaw/Configs/bytes
+        CollectorGUID: afddbfe87a53e9049bf031ee18842f87
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectAll
+        AssetTags: 
         UserData: 
     - GroupName: DLL
       GroupDesc: "\u4EE3\u7801"

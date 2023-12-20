@@ -1,0 +1,79 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBPvp";
+
+import "bean.proto";
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器。Pvp积分和排名由服务器控制
+
+//解锁Pvp
+message PvpUnlockReq{
+}
+
+message PvpUnlockResp{
+}
+
+//排行榜信息
+message PvpRankReq{
+	int32 page=1; //分页页数，从0开始，每次加1	
+}
+
+message PvpRankResp{
+	repeated PersonRankPb rank=1;//整个排行榜信息，分页发送
+	PersonRankPb self=2;//个人排行信息
+	int32 self_rank=3;//个人排名
+}
+
+//获取挑战列表
+message PvpListReq{
+	int32 param=1;//0不刷新只获取，1自动刷新，2手动刷新
+	string autoRefreshTime=2;//自动刷新时间
+	string manualRefreshTime=3;//手动刷新时间
+	map<int32,int32> changeItem= 4;//改变的道具，客户端维护道具
+}
+
+message PvpListResp{
+	repeated PersonRankPb pvpEnemy=1; //挑战玩家列表
+}
+
+//Pvp挑战
+message PvpReq{
+	int32 enemyPid=1;//挑战的pid
+	int32 pvpTimes=2;//变化后的挑战次数
+}
+
+message PvpResp{
+	PvpEnemyPb enemy=1;//敌方数据
+}
+
+//Pvp结算
+message PvpFinshReq{
+	int32 enemyPid=1;//挑战的敌方id
+	int32 result=2; //1-胜利 0-失败
+	int32 firstSucceed=3;//首次挑战是否胜利
+	map<int32,int32> changeItem= 4;//改变的道具，客户端维护道具
+}
+
+message PvpFinshResp{
+	int32 integral = 1;//个人积分
+	int32 rank=2;//个人排名
+}
+
+
+//每日奖励
+message PvpDailyRewardReq{
+	bool getDayReward = 1;//每日奖励是否已经领取
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message PvpDailyRewardResp{
+	
+}
+
+//添加挑战次数
+message PvpAddTimesReq{
+	int32 pvpTimes=1;//变化后的挑战次数
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message PvpAddTimesResp{
+}

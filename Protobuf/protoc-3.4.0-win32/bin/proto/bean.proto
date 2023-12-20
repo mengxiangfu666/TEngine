@@ -1,0 +1,177 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBBean";
+
+// 英雄单位信息
+message HeroData
+{
+	string id = 1;
+	string heroId = 2;
+	int32 star=3;
+}
+
+// 不可放置单位信息
+message StoneData
+{
+	string id=1;
+	int32 type=2;//1石头 2矿
+	int64 exploittime=3;
+}
+
+// 布阵单位信息
+message FormationData {
+  int32 pos = 1;
+  string id = 2;
+}
+
+// 英雄单位信息List
+message HeroDataList
+{
+	repeated HeroData heroData= 1;
+}
+
+// 不可放置单位信息List
+message StoneDataList
+{
+	repeated StoneData stoneData= 1;
+}
+
+// 布阵单位信息List
+message FormationDataList {
+  	repeated FormationData formationData = 1;
+}
+
+// BoolList
+message BoolList {
+  	repeated bool boolListData = 1;
+}
+
+// IntList
+message ListInt {
+  	repeated int32 data = 1;
+}
+
+//玩家信息(只需存储和获取)
+message PlayerPb{
+	//基础信息
+	int32 pid=1;
+	string account=2;
+	string name=3;
+	string icon = 4;
+	int32 prower = 5;
+	int32 exp = 6;
+	int32 level = 7;
+	int32 stage = 8;
+	string shopBuyGoldFirst = 9;
+	string shopBuyDiamondFirst = 10;
+	int32 gold = 11;
+	int32 diamond = 12;
+	int32 endlessTower = 13;
+	int32 shopCardKey = 14;
+	int32 turntableKey = 15;
+	//战斗相关信息
+	int32 totalHeroCount = 16;
+	HeroDataList heroDataList= 17;
+	StoneDataList stoneDataList= 18;
+	FormationDataList formationDataList = 19;
+	//派遣功能相关信息
+	int32 offerRewardTaskLevel = 20;
+	string offerRewardCount = 21;
+	string offerRewardTask = 22;
+	//卡牌功能相关信息
+	string cardData = 23;
+	//装备功能相关信息
+	string haveEquipmentData = 24;
+	string wearEquipmentData = 25;
+	//天赋功能相关信息
+	string talentData = 26;
+	//时间相关
+	string shopCardTime = 27;
+	string hangUpTime = 28;
+	string shopEqTime = 29;
+	string offerRewardTime = 30;
+	int32 bossChallengedTime = 31;
+	int32 goldChallengedTime = 32;
+	int32 surpriseBoxTime = 33;
+	string buleMonthCardTime = 34;
+	string purpleMonthCardTime = 35;
+	int32 buleMonthCardDailyRewardTime = 36;
+	int32 purpleMonthCardDailyRewardTime = 37;
+	string dailyLoginZeroTime = 38;
+	int32 playTimes = 39;
+	//转盘
+	int32 turntableAdTime = 40;
+	string turntableAdCDTime = 41;
+	//基金
+	string diamodGrowthFundTime = 42;
+	string goldGrowthFundTime = 43;
+	BoolList diamodGrowthFundReward = 44;
+	BoolList goldGrowthFundReward = 45;
+	//Pvp
+	string pvpAutoRefreshTime=46;//自动刷新时间记录
+	string pvpManualRefreshTime=47;//手动刷新时间记录
+	int32 pvpFirstSucceed=48;//Pvp首次胜利 0-未胜利 1-已胜利
+	int32 pvpTimes=59;//今日已挑战次数
+	int32 pvpKey=60;//PVP资源
+	bool pvpGetDayReward=61;//PVP本日奖励
+}
+
+//奖励
+message RewardPb{
+	int32 id=1;
+	int32 num=2; 
+}
+
+//邮件
+message MailPb{
+	int32 id=1;
+	string title=2;
+	string content=3;
+	repeated RewardPb reward=4;
+	int32 state=5; //0-新邮件 1-已读 2-已领 
+	int32 deltime=6;//删除时间 
+}
+
+//排行榜
+message RankPb{
+	int32 pid=1;
+	string name=2;
+	string icon = 3;
+	int32 prower = 4;
+	int32 stage = 5;
+}
+
+//接口返回错误
+message ErrorPb{
+	int32 code=1;
+	int32 reqId=2;
+	string msg=3;
+}
+
+// Pvp挑战列表单位信息
+message PvpChallengeListPb{
+	repeated int32 pid = 1;
+}
+
+// Pvp敌方信息
+message PvpEnemyPb{
+	int32 pid=1;
+	string name=2;
+	string icon = 3;
+	int32 level = 4;
+	int32 integral=5;
+	HeroDataList heroDataList=6;
+	FormationDataList formationDataList = 7;
+	string cardData = 8;
+	string wearEquipmentData = 9;
+	string talentData = 10;
+}
+
+//个人排行  pb
+message PersonRankPb{
+	int32 pid=1;
+	int32 level=2;
+	string icon=3;
+	string name=4;
+	int32 integral=5; 
+}

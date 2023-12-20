@@ -1,0 +1,40 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBCard";
+
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//商店购买卡牌
+message BuyCardReq{
+	string cardData = 1;
+	int32 exp = 2;
+	int32 level = 3;
+	int32 prower = 4;
+	map<int32,int32> changeItem= 5;//改变的道具，客户端维护道具
+}
+
+message BuyCardResp{
+}
+
+//商店免费购买卡牌
+message BuyFreeCardReq{
+	string cardData = 1;
+	int32 exp = 2;
+	int32 level = 3;
+	int32 prower = 4;
+	string shopCardTime = 5;
+}
+
+message BuyFreeCardResp{
+}
+
+//同步卡牌
+message SyncCardReq{
+	string cardData = 1;
+	int32 exp = 2;
+	int32 level = 3;
+	int32 prower = 4;
+}
+
+message SyncCardResp{
+}

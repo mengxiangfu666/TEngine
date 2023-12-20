@@ -35,16 +35,16 @@ namespace YooAsset
 		/// </summary>
 		public static string ConvertToWWWPath(string path)
 		{
-#if UNITY_EDITOR
-			return StringUtility.Format("file:///{0}", path);
+#if UNITY_WEBGL
+            return path;
+#elif UNITY_EDITOR
+            return StringUtility.Format("file:///{0}", path);
 #elif UNITY_IPHONE
 			return StringUtility.Format("file://{0}", path);
 #elif UNITY_ANDROID
 			return path;
 #elif UNITY_STANDALONE
 			return StringUtility.Format("file:///{0}", path);
-#elif UNITY_WEBGL
-			return path;
 #endif
 		}
 	}

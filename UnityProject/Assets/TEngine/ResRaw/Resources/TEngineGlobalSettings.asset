@@ -92,6 +92,8 @@ MonoBehaviour:
     - YooAsset.dll
     - UniTask.dll
     - TEngine.Runtime.dll
+    - UnityWebSocket.Runtime.dll
+    - Google.Protobuf.dll
     LogicMainDllName: GameLogic.dll
     AssemblyTextAssetExtension: .bytes
     AssemblyTextAssetPath: AssetRaw/DLL

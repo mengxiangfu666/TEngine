@@ -1,0 +1,167 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBPlayer";
+
+import "bean.proto";
+
+//心跳 --req nil
+message PingResp
+{
+	int32 time=1;
+}
+
+//登录
+message LoginReq{
+	string account=1;
+}
+
+message LoginResp{
+	PlayerPb playerData=1;
+	int64 sTime=7;
+}
+
+//同步基本信息
+message SyncReq{
+	PlayerPb playerData = 1; //pid和account仅做验证，不能修改
+}
+
+message SyncResp{
+	bool success = 1;
+}
+
+
+//排行榜
+message RankReq{
+	int32 type=1;//世界排行1 
+}
+
+message RankResp{
+	repeated RankPb rankData =1;
+}
+
+//同步关卡
+message SyncStageReq{
+	int32 stage = 1;
+}
+
+message SyncStageResp{
+}
+
+//添加钻石
+message AddDiamondReq{
+	string shopBuyDiamondFirst = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message AddDiamondResp{
+}
+
+//添加金币
+message AddGoldReq{
+	string shopBuyGoldFirst = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message AddGoldResp{
+}
+
+//同步道具
+message SyncItemReq{
+	map<int32,int32> changeItem= 1;//改变的道具，客户端维护道具
+}
+
+message SyncItemResp{
+}
+
+//普通回合结算
+message NormalFinshReq{
+	string haveEquipmentData = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message NormalFinshResp{
+
+}
+
+// GoldABoss回合结算奖励
+message GoldABossFinshReq{
+	string haveEquipmentData = 1;
+	int32 goldChallengedTime = 2;
+	int32 bossChallengedTime = 3;
+	map<int32,int32> changeItem= 4;//改变的道具，客户端维护道具
+}
+
+message GoldABossFinshResp{
+}
+
+// 无尽之塔结算
+message ClimbTowerFinshReq{
+	int32 endlessTower = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护
+}
+
+message ClimbTowerFinshResp{
+}
+
+//获取SurprisedReward
+message SurprisedRewardReq{
+	int32 surpriseBoxTime = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护
+}
+
+message SurprisedRewardResp{
+}
+
+//购买月卡
+message BuyMonthCardReq{
+	string buleMonthCardTime = 1;
+	string purpleMonthCardTime = 2;
+	int32 buleMonthCardDailyRewardTime = 3;
+	int32 purpleMonthCardDailyRewardTime = 4;
+	map<int32,int32> changeItem= 5;//改变的道具，客户端维护
+}
+
+message BuyMonthCardResp{
+}
+
+//获取月卡奖励
+message MonthCardRewardReq{
+	int32 buleMonthCardDailyRewardTime = 1;
+	int32 purpleMonthCardDailyRewardTime = 2;
+	map<int32,int32> changeItem= 3;//改变的道具，客户端维护
+}
+
+message MonthCardRewardResp{
+}
+
+//转盘奖励
+message TurntableRewardReq{
+	int32 turntableAdTime = 1;
+	string turntableAdCDTime = 2;
+	int32 turntableKey = 3;
+	HeroDataList heroDataList= 4;
+	int32 totalHeroCount= 5;
+	string haveEquipmentData = 6;
+	int32 exp = 7;
+	int32 prower = 8;
+	map<int32,int32> changeItem= 9;//改变的道具，客户端维护
+}
+
+message TurntableRewardResp{
+}
+
+//修改名字
+message ChangeNameReq{
+	string name = 1;
+}
+
+message ChangeNameResp{
+}
+
+//修改icon
+message ChangeIconReq{
+	string icon = 1;
+}
+
+message ChangeIconResp{
+}

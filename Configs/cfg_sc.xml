@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><module name="cfg">
+	<group name="server:client:designer:editor"/>
+	
+	<include name="common.xml"/>
+	<include name="global/global.xml"/>	
+	<!-- <include name="asset/asset.xml"/>	 -->
+	<!-- <include name="role/role.xml"/>	
+	<include name="role/headIcon.xml"/>	
+	<include name="role/npc.xml"/>	
+	<include name="item/item.xml"/>	
+	<include name="localize/localize_sc.xml"/>	
+	<include name="global/global.xml"/>	
+
+	<include name="action/action.xml"/>	 -->
+
+</module>

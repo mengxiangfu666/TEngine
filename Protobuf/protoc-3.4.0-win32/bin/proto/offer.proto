@@ -1,0 +1,59 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBOffer";
+
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//获取所有奖励
+message AllOfferRewardReq{
+	string offerRewardCount = 1;
+	string offerRewardTask = 2;
+	int32 offerRewardTaskLevel = 3;
+	map<int32,int32> changeItem= 4;//改变的道具，客户端维护道具
+}
+
+message AllOfferRewardResp{
+}
+
+//获取单个奖励
+message OfferRewardReq{
+	string offerRewardCount = 1;
+	string offerRewardTask = 2;
+	int32 offerRewardTaskLevel = 3;
+	map<int32,int32> changeItem= 4;//改变的道具，客户端维护道具
+}
+
+message OfferRewardResp{
+}
+
+//一键派遣
+message OfferDispatchAllReq{
+	string offerRewardCount = 1;
+	string offerRewardTask = 2;
+	int32 offerRewardTaskLevel = 3;
+}
+
+message DispatchAllResp{
+}
+
+//派遣某个任务
+message OfferDispatchReq{
+	string offerRewardCount = 1;
+	string offerRewardTask = 2;
+	int32 offerRewardTaskLevel = 3;
+}
+
+message OfferDispatchResp{
+}
+
+//刷新任务
+message OfferRefreshTaskReq{
+	string offerRewardCount = 1;
+	string offerRewardTask = 2;
+	int32 offerRewardTaskLevel = 3;
+	string offerRewardTime = 4;
+	map<int32,int32> changeItem= 5;//改变的道具，客户端维护道具
+}
+
+message OfferRefreshTaskResp{
+}

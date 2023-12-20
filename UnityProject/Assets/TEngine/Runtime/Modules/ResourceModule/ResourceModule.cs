@@ -577,6 +577,21 @@ namespace TEngine
                 packageName: customPackageName);
         }
 
+
+        /// <summary>
+        /// 同步加载原生资源。
+        /// </summary>
+        /// <param name="location">资源的定位地址。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="customPackageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">要加载资源的类型。</typeparam>
+        /// <returns>资源实例。</returns>
+        public byte[] LoadRawAsset(string location, bool needCache = false,
+            string customPackageName = "")
+        {
+            return m_ResourceManager.LoadRawAsset(location, needCache, packageName: customPackageName);
+        }
+
         /// <summary>
         /// 异步加载资源。
         /// </summary>
@@ -590,6 +605,22 @@ namespace TEngine
         {
             AssetOperationHandle handle =
                 m_ResourceManager.LoadAssetAsyncHandle<T>(location, needCache, packageName: customPackageName);
+
+            handle.Completed += callback;
+        }
+
+        /// <summary>
+        /// 异步加载资源。
+        /// </summary>
+        /// <param name="location">资源的定位地址。</param>
+        /// <param name="callback">回调函数。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="customPackageName">指定资源包的名称。不传使用默认资源包</param>
+        public void LoadRawAssetAsync(string location, Action<RawFileOperationHandle> callback = null,
+            bool needCache = false, string customPackageName = "")
+        {
+            RawFileOperationHandle handle =
+                m_ResourceManager.LoadRawAssetAsyncHandle(location, needCache, packageName: customPackageName);
 
             handle.Completed += callback;
         }
@@ -797,6 +828,28 @@ namespace TEngine
             return m_ResourceManager.GetPreLoadAsset<T>(location, packageName: customPackageName);
         }
 
+        /// <summary>
+        /// 放入预加载Raw资源字节数组。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="assetObject">预加载对象。</param>
+        /// <param name="customPackageName">指定资源包的名称。不传使用默认资源包</param>
+        public void PushPreLoadRawAsset(string location, byte[] data, string customPackageName = "")
+        {
+            m_ResourceManager.PushPreLoadRawAsset(location, data, packageName: customPackageName);
+        }
+
+        /// <summary>
+        /// 获取预加载的Raw资源字节数组。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="customPackageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">资源实例类型。</typeparam>
+        /// <returns>字节数组。</returns>
+        public byte[] GetPreLoadRawAsset(string location, string customPackageName = "")
+        {
+            return m_ResourceManager.GetPreLoadRawAsset(location, packageName: customPackageName);
+        }
         #endregion
     }
 }

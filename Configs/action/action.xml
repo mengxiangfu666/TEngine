@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module name="cfg.action">
+
+    <config name="Actions" input="actions.xlsx">
+        <var name="actionId" type="int"/>
+        <var name="actionConditions" type="ActionCondition"/>
+        <var name="actionContents" type="ActionContent"/>
+    </config>
+
+    <config name="Dialog" input="dialog.xlsx">
+        <var name="dialogId" type="int"/>
+        <var name="dialogInfo" type="array:DialogContent"/>
+    </config>
+    
+	<config name="Narration" input="narration.xlsx">
+        <var name="narrationId" type="int"/>
+        <var name="bg" type="string"/>
+		<var name="effectList" type="array:EffectType"/>
+		<var name="narrations" type="array:NarrationInfo"/>
+    </config>
+
+    <config name="BattleConfig" input="battleConfig.xlsx">
+        <var name="battleConfigId" type="int"/>
+        <var name="path" type="string"/>
+		<var name="isTimeLimit" type="bool"/>
+		<var name="timeLimitNum" type="float"/>
+		<var name="isJudgeLose" type="bool"/>
+    </config>
+
+
+	<bean name="NarrationInfo">
+		<var name="textContent" type="string"/>
+		<var name="pos" type="int"/>
+	</bean>
+
+	<bean name="CgContent">
+		<bean name="CgEmpty">
+		</bean>
+		<bean name="CgOpen">
+			<var name="assetId" type="string"/>
+			<var name="endClose" type="bool"/>
+		</bean>
+		<bean name="CgClose">
+		</bean>
+		<bean name="CgGamePlay">
+			<var name="playId" type="int"/>
+		</bean>
+	</bean>
+
+	<bean name="DialogContent">
+		<var name="talkId" type="int"/>
+		<var name="posShift" type="int"/>
+		<var name="isChangeFace" type="bool"/>
+		<var name="isShowHalfImg" type="bool"/>
+		<var name="isShowName" type="bool"/>
+		<var name="textContent" type="array:string"/>
+		<var name="dialogCg" type="CgContent"/>
+		<var name="effectList" type="array:EffectType"/>
+	</bean>
+        
+	<bean name="ActionCondition">
+		<bean name="And">
+        	<var name="actionConditions" type="array:ActionCondition"/>
+		</bean>		
+		<bean name="Or">
+        	<var name="actionConditions" type="array:ActionCondition"/>
+		</bean>		
+		<bean name="CheckEnv">
+        	<var name="envName" type="string"/>
+        	<var name="num" type="int"/>
+        	<var name="checkType" type="CheckWay"/>
+		</bean>
+		<bean name="CheckTopPanel">
+			<var name="pannelType" type="EPannelType"/>
+		</bean>
+	</bean>
+
+	<bean name="CheckWay">
+        <bean name="Larger">
+		</bean>	
+        <bean name="Smaller">
+		</bean>	
+        <bean name="Equal">
+		</bean>	
+	</bean>
+
+    <bean name="ActionContent">
+		
+        <bean name="Seq">
+			<var name="seqActions" type="array:ActionContent"/>
+		</bean>
+
+		<bean name="Par">
+			<var name="parActions" type="array:ActionContent"/>
+		</bean>
+
+		<bean name="NarrationAction">
+			<var name="narrationId" type="int"/>
+		</bean>
+
+		<bean name="DialogAction">
+			<var name="dialogId" type="int"/>
+		</bean>
+
+		<bean name="ChoiceAction">   
+			<var name="choices" type="array:ChoiceInfos"/>
+		</bean>
+
+		<bean name="ChatAction">
+			<var name="chatId" type="int"/>
+		</bean>
+
+		<bean name="DelayAction">
+			<var name="delayTime" type="int"/>
+		</bean>
+
+		<bean name="EffectAction">
+			<var name="effectList" type="array:EffectType"/>
+		</bean>		
+        
+        <bean name="EnvConfig">
+			<var name="name" type="string"/>
+			<var name="changeway" type="ChangeInfo"/>
+		</bean>
+
+        <bean name="TriggerAction">
+			<var name="actionId" type="array:int"/>
+		</bean>	
+
+		<bean name="KillNpcAction">
+			<var name="npcIds" type="array:int"/>
+		</bean>	
+	</bean>
+
+	<enum name="EPannelType">
+		<var name="mainPanel" value="0"/>
+		<var name="chatPanel" value="1"/>
+	</enum>
+
+	<bean name="EffectType">		
+		<bean name="NoEffect">
+		</bean>	
+		<bean name="PlayEffect">
+			<var name="effects" type="string"/>
+		</bean>	
+		<bean name="ScreenShake">
+			<var name="lasttime" type="float"/>
+		</bean>	
+		<bean name="CreateFilter">
+			<var name="para" type="string"/>
+			<var name="tras" type="float"/>
+			<var name="lasttime" type="float"/>
+		</bean>	
+		<bean name="PicShow">
+			<var name="pic" type="string"/>
+			<var name="pos_x" type="int"/>
+			<var name="pos_y" type="int"/>
+		</bean>	
+	</bean>	
+
+	<bean name="ChoiceInfos">
+		<var name="textContents" type="string"/>
+		<var name="actActions" type="int"/>
+	</bean>	
+        
+    <bean name="ChangeInfo">		
+        <bean name="Add">
+			<var name="num" type="int"/>
+		</bean>	
+    	<bean name="Min">
+			<var name="num" type="int"/>
+		</bean>	
+        <bean name="Assign">
+			<var name="num" type="int"/>
+		</bean>	
+	</bean>	
+
+    <config name="Chat" input="chat.xlsx">
+        <var name="chatId" type="int"/>
+        <var name="channelId" type="int"/>
+		<var name="chatDelayTime" type="float"/>
+		<var name="chatContents" type="array:ChatInfo"/>
+    </config>
+	
+    <bean name="ChatInfo">
+        <bean name="NpcChats">
+		    <var name="npcId" type="int"/>
+		    <var name="npcContents" type="array:string"/>
+	    </bean>
+
+		<bean name="NpcImage">
+		    <var name="npcId" type="int"/>
+		    <var name="previewPic" type="string"/>
+	    </bean>
+
+        <bean name="PlayerChats">
+		    <var name="replys" type="array:PlayerReply"/>
+	    </bean>       
+
+        <bean name="GamePlay">
+			<var name="npcId" type="int"/>
+		    <var name="previewPic" type="string"/>
+		    <var name="playId" type="int"/>
+		    <var name="winGameTrigger" type="int"/>
+		    <var name="loseGameTrigger" type="int"/>
+	    </bean>        
+
+        <bean name="CardContents">
+			<var name="npcId" type="int"/>
+		    <var name="cardId" type="int"/>
+	    </bean> 
+
+		<bean name="NoRepo">
+		    <var name="delayTime" type="float"/>
+	    </bean>
+
+		<bean name="PlayerRepeatChats">
+			<var name="finshTrigger" type="int"/>
+		    <var name="replys" type="array:PlayerReply"/>
+	    </bean>   
+
+		<bean name="PlayerExChats">
+		    <var name="replys" type="array:PlayerExReply"/>
+	    </bean>     
+        
+		<bean name="SystemTip">
+		    <var name="tipContent" type="string"/>
+	    </bean>   
+
+	</bean>
+	
+    <bean name="PlayerReply">
+		<var name="playerContents" type="string"/>
+		<var name="actionTrigger" type="int"/>
+	</bean>
+
+	<bean name="PlayerExReply">
+		<var name="playerContents" type="string"/>
+		<var name="playerRealContents" type="string"/>
+		<var name="actionTrigger" type="int"/>
+	</bean>
+
+	<bean name="CardContentInfo">
+		<bean name="RichText">
+		    <var name="content" type="string"/>
+	    </bean>
+		<bean name="CardImage">
+		    <var name="assetId" type="string"/>
+	    </bean>
+	</bean>
+
+	<bean name="CardRemarkInfo">
+		<bean name="Empty">
+	    </bean>
+		<bean name="FirstRemark">
+		    <var name="npcId" type="int"/>
+			<var name="content" type="string"/>
+	    </bean>
+		<bean name="SecondRemark">
+		    <var name="npcId" type="int"/>
+			<var name="content" type="string"/>
+	    </bean>
+	</bean>
+
+	<config name="CardInfo" input="card.xlsx">
+        <var name="cardId" type="int"/>
+        <var name="previewPic" type="string"/>
+        <var name="headLine" type="string"/>
+        <var name="previewContents" type="string"/>
+        <var name="realContents" type="array:CardContentInfo"/>
+        <var name="remarks" type="array:CardRemarkInfo"/>
+    </config>
+	
+	<enum name="EChannelType">
+		<var name="player" value="0"/>
+		<var name="group" value="1"/>
+	</enum>
+
+	<config name="Channel" input="channel.xlsx">
+        <var name="channelid" type="int"/>
+        <var name="chapterid" type="int"/>
+        <var name="channelIconId" type="int"/>
+        <var name="channelName" type="string"/>
+        <var name="channelType" type="EChannelType"/>
+        <var name="npcId" type="int"/>
+    </config>
+	
+	<config name="Chatper" input="chapter.xlsx">
+        <var name="chapterId" type="int"/>
+        <var name="chapterName" type="string"/>
+        <var name="channelIds" type="array:int"/>
+    </config>
+</module>

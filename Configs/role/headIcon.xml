@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module name="cfg.headIcon">
+    <config name="HeadIcon" input="headIcon.xlsx">
+        <var name="Id" type="int"/>
+		<var name="AssetId" type="string"/>
+    </config>
+	
+	
+</module>

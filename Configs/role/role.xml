@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module name="cfg.role">
+    <config name="Role" input="role.xlsx">
+        <var name="roleId" type="int"/>
+		<var name="name" type="string"/>
+		<var name="headIconId" type="int"/>
+		<var name="halfIcon" type="string"/>
+    </config>
+	
+	
+</module>

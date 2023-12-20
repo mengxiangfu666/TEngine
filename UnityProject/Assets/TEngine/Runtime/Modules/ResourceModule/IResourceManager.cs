@@ -249,6 +249,24 @@ namespace TEngine
             where T : Object;
 
         /// <summary>
+        /// 同步加载原生资源。
+        /// </summary>
+        /// <param name="location">资源的定位地址。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <returns>字节数组。</returns>
+        byte[] LoadRawAsset(string location, bool needCache = false, string packageName = "");
+
+        /// <summary>
+        /// 异步加载原生资源并获取句柄。
+        /// </summary>
+        /// <param name="location">资源的定位地址。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <returns>异步加载原生资源句柄。</returns>
+        RawFileOperationHandle LoadRawAssetAsyncHandle(string location, bool needCache = false, string packageName = "");
+
+        /// <summary>
         /// 同步加载子资源对象。
         /// </summary>
         /// <typeparam name="TObject">资源类型。</typeparam>
@@ -368,5 +386,22 @@ namespace TEngine
         /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
         /// <returns>预加载对象。</returns>
         public T GetPreLoadAsset<T>(string location, string packageName = "") where T : Object;
+
+        /// <summary>
+        /// 放入预加载原生资源。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="assetObject">预加载对象。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        public void PushPreLoadRawAsset(string location, byte[] data, string packageName = "");
+
+        /// <summary>
+        /// 获取预加载的原生资源。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <typeparam name="T">资源实例类型。</typeparam>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <returns>字节数组。</returns>
+        public byte[] GetPreLoadRawAsset(string location, string packageName = "");
     }
 }

@@ -1,0 +1,66 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBPlayerBattle";
+
+import "bean.proto";
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//商店购买英雄
+message BuyHeroReq{
+	FormationDataList formationDataList = 1;
+	HeroDataList heroDataList= 2;
+	int32 totalHeroCount = 3;
+	int32 exp = 4;
+	int32 prower = 5;
+	map<int32,int32> changeItem= 6;//改变的道具，客户端维护道具
+}
+
+message BuyHeroResp{
+}
+
+//英雄升星
+message HeroUpStarReq{
+	FormationDataList formationDataList = 1;
+	HeroDataList heroDataList= 2;
+	int32 prower = 3;
+}
+
+message HeroUpStarResp{
+}
+
+//同步布阵
+message SyncFormationReq{
+	FormationDataList formationDataList = 1;
+	int32 prower = 2;
+}
+
+message SyncFormationResp{
+}
+
+//同步英雄
+message SyncHeroReq{
+	HeroDataList heroDataList = 1;
+	int32 exp = 2;
+	int32 prower = 3;
+}
+
+message SyncHeroResp{
+}
+
+//解锁stone为mine
+message UnlockMineReq{
+	StoneDataList stoneDataList= 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message UnlockMineResp{
+}
+
+//获取mine奖励
+message MineRewardReq{
+	StoneDataList stoneDataList= 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message MineRewardResp{
+}

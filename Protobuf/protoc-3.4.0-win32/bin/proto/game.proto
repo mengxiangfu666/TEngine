@@ -1,0 +1,156 @@
+﻿syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBGame";
+
+
+enum ReqId {
+	test_id=0;
+	//系统
+	PingReq_id=1;
+
+	LoginReq_id=1001;
+	SyncReq_id=1002;
+	RankReq_id = 1003;
+	PvpReq_id = 1004;
+	PvpRankReq_id = 1005;
+	PvpListReq_id = 1006;
+	PvpFinshReq_id = 1007;
+	PvpUnlockReq_id = 1008;
+	OfferAllRewardReq_id = 1009;
+	OfferRewardReq_id = 1010;
+	OfferDispatchAllReq_id = 1011;
+	OfferDispatchReq_id = 1012;
+	OfferRefreshReq_id = 1013;
+	TimeDayRefreashReq_id = 1014;
+	TimeHangUpRewardReq_id = 1015;
+	TalentUpLevelReq_id = 1016;
+	BuyDiamodGrowthFundReq_id = 1017;
+	BuyGoldGrowthFundReq_id = 1018;
+	DiamodGrowthFundRewardReq_id = 1019;
+	GoldGrowthFundRewardReq_id = 1020;
+	BuyEquipmentReq_id = 1021;
+	BuyFreeEquipmentReq_id = 1022;
+	SyncEquipmentReq_id = 1023;
+	AddEquipmentReq_id = 1024;
+	BuyCardReq_id = 1025;
+	BuyFreeCardReq_id = 1026;
+	SyncCardReq_id = 1027;
+	BuyHeroReq_id = 1028;
+	HeroUpStarReq_id = 1029;
+	SyncFormationReq_id = 1030;
+	SyncHeroReq_id = 1031;
+	UnlockMineReq_id = 1032;
+	MineRewardReq_id = 1033;
+	SyncStageReq_id = 1034;
+	AddDiamondReq_id = 1035;
+	AddGoldReq_id = 1036;
+	SyncItemReq_id = 1037;
+	NormalFinshReq_id = 1038;
+	GoldABossFinshReq_id = 1039;
+	ClimbTowerFinshReq_id = 1040;
+	SurprisedRewardReq_id = 1041;
+	BuyMonthCardReq_id = 1042;
+	MonthCardRewardReq_id = 1043;
+	TurntableRewardReq_id = 1044;
+	PvpDailyRewardReq_id = 1045;
+	PvpAddTimesReq_id = 1046;
+	ChangeNameReq_id = 1047;
+	ChangeIconReq_id = 1048;
+}
+
+
+enum RespId{
+	Zero_id=0;
+	//系统
+	PingResp_id=1;
+	
+	ErrorResp_id=2; // 接口返回错误
+	LoginResp_id=2001;
+	SyncResp_id=2002;
+	RankResp_id = 2003;
+	PvpResp_id = 2004;
+	PvpRankResp_id = 2005;
+	PvpListResp_id = 2006;
+	PvpFinshResp_id = 2007;
+	PvpUnlockResp_id = 2008;
+	OfferAllRewardResp_id = 2009;
+	OfferRewardResp_id = 2010;
+	OfferDispatchAllResp_id = 2011;
+	OfferDispatchResp_id = 2012;
+	OfferRefreshResp_id = 2013;
+	TimeDayRefreashResp_id = 2014;
+	TimeHangUpRewardResp_id = 2015;
+	TalentUpLevelResp_id = 2016;
+	BuyDiamodGrowthFundResp_id = 2017;
+	BuyGoldGrowthFundResp_id = 2018;
+	DiamodGrowthFundRewardResp_id = 2019;
+	GoldGrowthFundRewardResp_id = 2020;
+	BuyEquipmentResp_id = 2021;
+	BuyFreeEquipmentResp_id = 2022;
+	SyncEquipmentResp_id = 2023;
+	AddEquipmentResp_id = 2024;
+	BuyCardResp_id = 2025;
+	BuyFreeCardResp_id = 2026;
+	SyncCardResp_id = 2027;
+	BuyHeroResp_id = 2028;
+	HeroUpStarResp_id = 2029;
+	SyncFormationResp_id = 2030;
+	SyncHeroResp_id = 2031;
+	UnlockMineResp_id = 2032;
+	MineRewardResp_id = 2033;
+	SyncStageResp_id = 2034;
+	AddDiamondResp_id = 2035;
+	AddGoldResp_id = 2036;
+	SyncItemResp_id = 2037;
+	NormalFinshResp_id = 2038;
+	GoldABossFinshResp_id = 2039;
+	ClimbTowerFinshResp_id = 2040;
+	SurprisedRewardResp_id = 2041;
+	BuyMonthCardResp_id = 2042;
+	MonthCardRewardResp_id = 2043;
+	TurntableRewardResp_id = 2044;
+	PvpDailyRewardResp_id = 2045;
+	PvpAddTimesResp_id = 2046;
+	ChangeNameResp_id = 2047;
+	ChangeIconResp_id = 2048;
+}
+
+
+
+enum Code {
+	ok=0; //成功
+	fail=1; //失败
+	relogin=2; //重新登录(连接有效，但是并没有成功登录)
+	closeconn=3; //永久关闭连接 （连接无效不要重连,例如非法连接，黑名单，被顶号....）
+}
+
+
+enum MailState{
+	//0-新邮件 1-已读 2-已领 
+	newmail=0;
+	read=1;
+	get=2;
+}
+
+enum ItemState{
+	gold=0;
+	diamond=1;
+	shopCardKey=2;
+	pvpKey=3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

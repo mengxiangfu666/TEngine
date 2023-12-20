@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBTalent";
+
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//Talent升级
+message TalentUpLevelReq{
+	string talentData = 1;
+	int32 prower = 2;
+	map<int32,int32> changeItem= 3;//改变的道具，客户端维护道具
+}
+
+message TalentUpLevelResp{
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<module name="cfg.global">
+	<!-- 表格描述 -->
+	<bean name="GlobalValue">
+		<bean name="StringValue">
+			<var name="Value" type="string"/>
+		</bean>
+		<bean name="FloatValue">
+			<var name="Value" type="float"/>
+		</bean>
+		<bean name="IntValue">
+			<var name="Value" type="int"/>
+		</bean>		
+        <bean name="ListIntValue">
+			<var name="Value" type="list,int"/>
+		</bean>	
+		<bean name="ListStringValue">
+			<var name="Value" type="list,string"/>
+		</bean>	
+	</bean>
+
+	<config name="GlobalCfg" input="globalCfg.xlsx">
+        <var name="Id" type="string"/>
+		<var name="Comment" type="string"/>	
+		<var name="Value" type="GlobalValue"/>	
+    </config>
+</module>

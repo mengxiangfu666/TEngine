@@ -138,6 +138,11 @@ namespace GameMain
             {
                 LoadConfig(assetInfo.Address);
             }
+            AssetInfo[] rawAssetInfos = GameModule.Resource.GetAssetInfos("PRELOAD_RAWFILE");
+            foreach (var assetInfo in rawAssetInfos)
+            {
+                LoadRawConfig(assetInfo.Address);
+            }
 #if UNITY_WEBGL
             AssetInfo[] webAssetInfos = GameModule.Resource.GetAssetInfos("WEBGL_PRELOAD");
             foreach (var assetInfo in webAssetInfos)
@@ -154,6 +159,12 @@ namespace GameMain
             GameModule.Resource.LoadAssetAsync<TextAsset>(configName, OnLoadSuccess);
         }
 
+        private void LoadRawConfig(string configName)
+        {
+            _loadedFlag.Add(configName, false);
+            GameModule.Resource.LoadRawAssetAsync(configName, OnRawConfigLoadSuccess);
+        }
+
         private void OnLoadSuccess(AssetOperationHandle assetOperationHandle)
         {
             if (assetOperationHandle == null)
@@ -163,6 +174,19 @@ namespace GameMain
             var location = assetOperationHandle.GetAssetInfo().Address;
             _loadedFlag[location] = true;
             GameModule.Resource.PushPreLoadAsset(location, assetOperationHandle.AssetObject);
+            Log.Info("Load config '{0}' OK.", location);
+            assetOperationHandle.Dispose();
+        }
+
+        private void OnRawConfigLoadSuccess(RawFileOperationHandle assetOperationHandle)
+        {
+            if (assetOperationHandle == null)
+            {
+                return;
+            }
+            var location = assetOperationHandle.GetAssetInfo().Address;
+            _loadedFlag[location] = true;
+            GameModule.Resource.PushPreLoadRawAsset(location, assetOperationHandle.GetRawFileData());
             Log.Info("Load config '{0}' OK.", location);
             assetOperationHandle.Dispose();
         }

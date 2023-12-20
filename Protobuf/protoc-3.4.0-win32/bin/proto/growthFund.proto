@@ -1,0 +1,41 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBGrowthFund";
+
+import "bean.proto";
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//购买钻石基金
+message BuyDiamodGrowthFundReq{
+	string diamodGrowthFundTime = 1;
+}
+
+message BuyDiamodGrowthFundResp{
+}
+
+//购买金币基金
+message BuyGoldGrowthFundReq{
+	string goldGrowthFundTime = 1;
+}
+
+message BuyGoldGrowthFundResp{
+}
+
+//领取钻石基金奖励
+message DiamodGrowthFundRewardReq{
+	BoolList diamodGrowthFundReward = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message DiamodGrowthFundRewardResp{
+
+}
+
+//领取金币基金奖励
+message GoldGrowthFundRewardReq{
+	BoolList goldGrowthFundReward = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message GoldGrowthFundRewardResp{
+}

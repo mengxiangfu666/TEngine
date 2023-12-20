@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using editor.cfg.global;
 using GameBase;
 using TEngine;
 
@@ -37,7 +38,9 @@ public partial class GameApp:Singleton<GameApp>
     /// </summary>
     private void StartGameLogic()
     {
-        
+        ConfigSystem.Instance.Load();
+        Log.Error("=====");
+        Log.Error(ConfigSystem.Instance.GetGlobalValue<IntValue>("MaxPhysical").Value);
     }
 
     /// <summary>

@@ -115,6 +115,8 @@ namespace TEngine
             _assetInfoMap.Clear();
 
             ReleasePreLoadAssets(isShutDown: true);
+
+            ReleasePreLoadRawAssets(isShutDown: true);
 #if !UNITY_WEBGL
             YooAssets.Destroy();
 #endif
@@ -194,6 +196,7 @@ namespace TEngine
         private Dictionary<string, AssetOperationHandle> _operationHandlesMaps;
 
         private ArcCacheTable<string, AssetOperationHandle> _arcCacheTable;
+        private ArcCacheTable<string, RawFileOperationHandle> _rawArcCacheTable;
 
 
         private void OnAddAsset(string location, AssetOperationHandle handle)
@@ -266,6 +269,54 @@ namespace TEngine
         }
 
         /// <summary>
+        /// 从缓存中获取同步Raw资源句柄。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">资源类型。</typeparam>
+        /// <returns>Raw资源句柄。</returns>
+        private RawFileOperationHandle GetRawAssetHandleSync(string location, bool needCache = false, string packageName = "")
+        {
+            if (!needCache)
+            {
+                if (string.IsNullOrEmpty(packageName))
+                {
+                    return YooAssets.LoadRawFileSync(location);
+                }
+
+                var package = YooAssets.GetPackage(packageName);
+                return package.LoadRawFileSync(location);
+            }
+
+            // 缓存key
+            var cacheKey = string.IsNullOrEmpty(packageName) || packageName.Equals(PackageName)
+                ? location
+                : $"{packageName}/{location}";
+
+            RawFileOperationHandle handle = null;
+            // 尝试从从ARC缓存表取出对象。
+            handle = _rawArcCacheTable.GetCache(cacheKey);
+
+            if (handle == null)
+            {
+                if (string.IsNullOrEmpty(packageName))
+                {
+                    handle = YooAssets.LoadRawFileSync(location);
+                }
+                else
+                {
+                    var package = YooAssets.GetPackage(packageName);
+                    handle = package.LoadRawFileSync(location);
+                }
+            }
+
+            // 对象推入ARC缓存表。
+            _rawArcCacheTable.PutCache(cacheKey, handle);
+            return handle;
+        }
+
+        /// <summary>
         /// 从缓存中获取异步资源句柄。
         /// </summary>
         /// <param name="location">资源定位地址。</param>
@@ -311,6 +362,55 @@ namespace TEngine
 
             // 对象推入ARC缓存表。
             _arcCacheTable.PutCache(cacheKey, handle);
+            return handle;
+        }
+
+
+        /// <summary>
+        /// 从缓存中获取异步Raw资源句柄。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="needCache">是否需要缓存。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">资源类型。</typeparam>
+        /// <returns>资源句柄。</returns>
+        private RawFileOperationHandle GetRawAssetHandleAsync(string location, bool needCache = false, string packageName = "")
+        {
+            if (!needCache)
+            {
+                if (string.IsNullOrEmpty(packageName))
+                {
+                    return YooAssets.LoadRawFileAsync(location);
+                }
+
+                var package = YooAssets.GetPackage(packageName);
+                return package.LoadRawFileAsync(location);
+            }
+
+            // 缓存key
+            var cacheKey = string.IsNullOrEmpty(packageName) || packageName.Equals(PackageName)
+                ? location
+                : $"{packageName}/{location}";
+
+            RawFileOperationHandle handle = null;
+            // 尝试从从ARC缓存表取出对象。
+            handle = _rawArcCacheTable.GetCache(cacheKey);
+
+            if (handle == null)
+            {
+                if (string.IsNullOrEmpty(packageName))
+                {
+                    handle = YooAssets.LoadRawFileAsync(location);
+                }
+                else
+                {
+                    var package = YooAssets.GetPackage(packageName);
+                    handle = package.LoadRawFileAsync(location);
+                }
+            }
+
+            // 对象推入ARC缓存表。
+            _rawArcCacheTable.PutCache(cacheKey, handle);
             return handle;
         }
 
@@ -777,6 +877,18 @@ namespace TEngine
             return ret;
         }
 
+        public byte[] LoadRawAsset(string location, bool needCache = false, string packageName = "")
+        {
+            if (string.IsNullOrEmpty(location))
+            {
+                Log.Error("Asset name is invalid.");
+                return default;
+            }
+
+            RawFileOperationHandle handle = GetRawAssetHandleSync(location, needCache, packageName: packageName);
+            return handle.GetRawFileData();
+        }
+
         public AssetOperationHandle LoadAssetGetOperation<T>(string location, bool needCache = false,
             string packageName = "") where T : Object
         {
@@ -787,6 +899,12 @@ namespace TEngine
             string packageName = "") where T : Object
         {
             return GetHandleAsync<T>(location, needCache, packageName: packageName);
+        }
+
+        public RawFileOperationHandle LoadRawAssetAsyncHandle(string location, bool needCache = false,
+            string packageName = "")
+        {
+            return GetRawAssetHandleAsync(location, needCache, packageName: packageName);
         }
 
         public SubAssetsOperationHandle LoadSubAssetsSync<TObject>(string location, string packageName = "")
@@ -1051,6 +1169,38 @@ namespace TEngine
             _preLoadMaps.Clear();
         }
 
+        private readonly Dictionary<string, byte[]> _preLoadRawAssetMaps = new Dictionary<string, byte[]>();
+
+        public void PushPreLoadRawAsset(string location, byte[] data, string packageName = "")
+        {
+            var cacheKey = string.IsNullOrEmpty(packageName) || packageName.Equals(PackageName)
+                ? location
+                : $"{packageName}/{location}";
+            if (_preLoadMaps.ContainsKey(cacheKey))
+            {
+                return;
+            }
+
+            _preLoadRawAssetMaps.Add(cacheKey, data);
+        }
+
+        public byte[] GetPreLoadRawAsset(string location, string packageName = "")
+        {
+            var cacheKey = string.IsNullOrEmpty(packageName) || packageName.Equals(PackageName)
+                ? location
+                : $"{packageName}/{location}";
+            if (_preLoadRawAssetMaps.TryGetValue(cacheKey, out var assetObject))
+            {
+                return assetObject;
+            }
+
+            return default;
+        }
+
+        private void ReleasePreLoadRawAssets(bool isShutDown = false)
+        {
+            _preLoadRawAssetMaps.Clear();
+        }
         #endregion
     }
 }

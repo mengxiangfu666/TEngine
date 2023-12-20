@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><module name="cfg.localize">
+
+	<config name="Language" input="Language.xlsx">
+		<var name="id" type="int"/>
+		<var name="chinese" type="string"/>
+		<var name="english" type="string"/>
+	</config>
+</module>

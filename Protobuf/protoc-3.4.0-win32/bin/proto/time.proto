@@ -1,0 +1,31 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBTime";
+
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//每天刷新的数据相关
+message TimeDayRefreashReq{
+	string dailyLoginZeroTime = 1;
+	int32 buleMonthCardDailyRewardTime = 2;
+	int32 purpleMonthCardDailyRewardTime = 3;
+	int32 surpriseBoxTime = 4;
+	int32 bossChallengedTime = 5;
+	int32 goldChallengedTime = 6;
+	int32 turntableAdTime = 7;
+	string turntableAdCDTime = 8;
+	int32 pvpTimes = 9;
+	bool pvpGetDayReward = 10;
+}
+
+message TimeDayRefreashResp{
+}
+
+// 领取hangUp奖励
+message TimeHangUpRewardReq{
+	string hangUpTime = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message TimeHangUpRewardResp{
+}

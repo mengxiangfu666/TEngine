@@ -33,6 +33,8 @@ MonoBehaviour:
   - YooAsset.dll
   - UniTask.dll
   - TEngine.Runtime.dll
+  - UnityWebSocket.Runtime.dll
+  - Google.Protobuf.dll
   outputLinkFile: HybridCLRGenerate/link.xml
   outputAOTGenericReferenceFile: HybridCLRGenerate/AOTGenericReferences.cs
   maxGenericReferenceIteration: 10

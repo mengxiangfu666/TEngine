@@ -1,0 +1,42 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBEquipment";
+
+// 服务器不做数据变化逻辑，只做数据存储，客户端需要将变化完的数据发给服务器
+
+//商店购买装备
+message BuyEquipmentReq{
+	string haveEquipmentData = 1;
+	map<int32,int32> changeItem= 2;//改变的道具，客户端维护道具
+}
+
+message BuyEquipmentResp{
+}
+
+// 商店免费购买装备
+message BuyFreeEquipmentReq{
+	string haveEquipmentData = 1;
+	string shopEqTime = 2;
+}
+
+message BuyFreeEquipmentResp{
+}
+
+// 同步装备
+message SyncEquipmentReq{
+	string haveEquipmentData = 1;
+	string wearEquipmentData = 2;
+	int32 prower = 3;
+}
+
+message SyncEquipmentResp{
+}
+
+// 添加装备
+message AddEquipmentReq{
+	string haveEquipmentData = 1;
+}
+
+message AddEquipmentResp{
+	string haveEquipmentData = 1;
+}

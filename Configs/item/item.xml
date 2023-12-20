@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module name="cfg.item">
+	
+	<config input="item.xlsx" name="Item">
+		<var name="id" type="int"/> id
+		<var name="name" type="string"/> 名称
+		<var name="desc" type="string"/> 说明
+		<var name="icon" type="string"/> 图标
+	</config>
+</module>

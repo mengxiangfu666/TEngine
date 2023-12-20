@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module name="cfg.npc">
+    <config name="Npc" input="npc.xlsx">
+        <var name="npcId" type="int"/>
+		<var name="name" type="string"/>
+		<var name="headIconId" type="int"/>
+		<var name="halfIcon" type="string"/>
+    </config>
+	
+	
+</module>

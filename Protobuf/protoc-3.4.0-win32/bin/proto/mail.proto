@@ -1,0 +1,28 @@
+syntax = "proto3";
+option java_package="com.cb.msg";
+option java_outer_classname="PBMail";
+
+import "bean.proto";
+
+//邮件列表请求
+message MailListReq{
+	
+}
+
+message MailListResp{
+	repeated MailPb mail=1;
+}
+
+
+
+
+//邮件操作
+message MailOperReq{
+	int32 id=1; //邮件id
+	int32 oper=2; //操作 1-读取 2-领附件 3-删除
+}
+
+message MailOperResp{
+	int32 id=1;
+	int32 state=2;
+}
