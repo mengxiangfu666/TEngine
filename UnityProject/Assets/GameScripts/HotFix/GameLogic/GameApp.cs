@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Reflection;
-using editor.cfg.global;
 using GameBase;
 using TEngine;
 
@@ -40,7 +39,7 @@ public partial class GameApp:Singleton<GameApp>
     {
         ConfigSystem.Instance.Load();
         Log.Error("=====");
-        Log.Error(ConfigSystem.Instance.GetGlobalValue<IntValue>("MaxPhysical").Value);
+        Log.Error(ConfigSystem.Instance.GetGlobalValue<cfg.global.IntValue>("MaxPhysical").Value);
     }
 
     /// <summary>

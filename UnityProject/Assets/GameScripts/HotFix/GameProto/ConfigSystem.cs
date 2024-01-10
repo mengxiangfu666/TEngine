@@ -1,8 +1,8 @@
 ﻿using GameBase;
-using editor.cfg;
 using TEngine;
 using UnityEngine;
-using editor.cfg.global;
+using cfg.global;
+using cfg;
 
 /// <summary>
 /// 配置加载器。
